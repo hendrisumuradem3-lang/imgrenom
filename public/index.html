@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Upload/Mirror Foto</title>
+</head>
+<body>
+  <h1>Upload/Mirror ke Vercel Blob</h1>
+  <form id="uploadForm">
+    <input type="file" name="file">
+    <button>Upload</button>
+  </form>
+  <hr>
+  <input id="mirrorUrl" placeholder="Tempel URL gambar">
+  <button id="mirrorBtn">Mirror</button>
+  <pre id="out"></pre>
+<script>
+const f=document.getElementById('uploadForm');const o=document.getElementById('out');
+f.onsubmit=async e=>{e.preventDefault();const fd=new FormData(f);const r=await fetch('/api/upload',{method:'POST',body:fd});o.textContent=await r.text();}
+document.getElementById('mirrorBtn').onclick=async()=>{const u=document.getElementById('mirrorUrl').value.trim();const r=await fetch('/api/mirror',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({url:u})});o.textContent=await r.text();}
+</script>
+</body>
+</html>
